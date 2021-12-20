@@ -26,10 +26,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/UpperM/patchtracking">
-    <img src="https://github.com/UpperM/patchtracking/blob/master/public/assets/img/PatchTracking-logo-text.png" alt="Logo">
-  </a>
-
+    <img src="https://github.com/UpperM/patchtracking/blob/main/public/assets/img/PatchTracking-logo-text.png" alt="Logo">
 
   <p align="center">
     Manage application your updates from web application.<br>
@@ -62,7 +59,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-<img src="https://github.com/UpperM/patchtracking/blob/master/screenshot.png" alt="Logo">
+<img src="https://github.com/UpperM/patchtracking/blob/main/screenshot.png" alt="Logo">
 
 This application allows you to manage the updates of your applications. It's possible to automatically retrieve the installed version of the software (through the API) and the latest github release.
 
