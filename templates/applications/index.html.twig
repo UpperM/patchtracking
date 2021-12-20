@@ -1,0 +1,212 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ application.name }}{% endblock %}
+
+
+{% block content %}
+
+    <!-- Content Header (Page header) -->
+
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>{{ application.name }}</h2>
+            </div>
+            <div class="col-sm-6">
+              <ol class="breadcrumb float-sm-right">
+                <li class="breadcrumb-item"><a href="/">Applications</a></li>
+                <li class="breadcrumb-item active">{{ application.name }}</li>
+              </ol>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row text-center">
+
+                    <div class="col-md-4">
+                        <h2>
+                            {{ 'version.current' | trans({}, 'patchtracking')}} : <b>{{ application.currentVersion}}</b>
+                        </h2>
+                    </div>
+                    <div class="col-md-4">
+                        {% if application.currentVersion >= application.latestVersion %}
+                            <h3><span class="badge bg-success">{{ 'changelog.up_to_date' | trans({}, 'patchtracking')}}</span></h3>
+                        {% else %}
+                            <h3><span class="badge bg-primary">{{ 'changelog.not_up_to_date' | trans({}, 'patchtracking')}}</span></h3>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <h2>{{ 'version.latest' | trans({}, 'patchtracking')}} : <b>{{ application.latestVersion }}</h2></b>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+
+            {% if application.currentVersion < application.latestVersion %}
+            <div class="row">
+                <div class="col-md-12 text-center mb-3">
+                    <button class="btn btn-primary modal-trigger" data-toggle="modal" data-target="#modal-schedule">{{ 'changelog.schedule_update' | trans({}, 'patchtracking')}}</button>
+                </div>
+            </div>
+            {% endif %}
+        <!-- Changelog -->
+        <div class="card">
+
+            <div class="card-body">
+                <h4>Historique des mises à jours</h4>
+
+                {% if application.changelogs|length > 0 %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ 'version.oldest' | trans({}, 'patchtracking')}}</th>
+                        <th scope="col">{{ 'version.new' | trans({}, 'patchtracking')}}</th>
+                        <th scope="col">{{ 'changelog.scheduled_date' | trans({}, 'patchtracking')}}</th>
+                        <th scope="col">{{ 'changelog.effective_date' | trans({}, 'patchtracking')}}</th>
+                        <th scope="col">{{ 'changelog.done_by' | trans({}, 'patchtracking')}}</th>
+                        <th scope="col">{{ 'changelog.comment' | trans({}, 'patchtracking')}}</th>
+                        <th scope="col">{{ 'global.status' | trans({}, 'patchtracking')}}</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                        {% for changelog in application.changelogs %}
+                        <tr>
+                            <td>{{ changelog.updateVersionFrom }}</td>
+                            <td>{{ changelog.updateVersionTo }}</td>
+                            <td>{{ changelog.updateScheduleAt | format_datetime('short', 'none', locale='fr') }}</td>
+                            <td>
+                                {% if changelog.updateDate %}
+                                    {{ changelog.updateDate | format_datetime('short', 'none', locale='fr') }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if changelog.updateBy %}
+                                {{ changelog.updateBy.getFullName }}
+                                {% endif %}
+                            </td>
+                            <td>
+
+                                {% if changelog.comment|length > 20  %}
+                                {{ changelog.comment[:20] }} ...
+                                {% else %}
+                                {{changelog.comment}}
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                {% if changelog.status == 1 %}
+                                    <span class="badge bg-success">{{ 'global.success' | trans({}, 'patchtracking')}}</span>
+                                {% elseif changelog.status == 2 %}
+                                    <span class="badge bg-primary">{{ 'global.scheduled' | trans({}, 'patchtracking')}}</span>
+                                {% endif %}
+                            </td>
+
+                            {% if changelog.status == 1 %}
+                            <td class="project-actions text-right">
+                                <button class="btn btn-secondary btn-sm modal-trigger" data-toggle="modal" data-target="#modal-{{changelog.id}}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+
+                                {{ render(controller('App\\Controller\\ChangelogController::show', { 'id' : changelog.id } )) }}
+
+                            </td>
+
+                            {% endif %}
+
+                            {% if changelog.status == 2 %}
+                              <td class="project-actions text-right">
+                                <button class="btn btn-success btn-sm modal-trigger" data-toggle="modal" data-target="#modal-validate-{{changelog.id}}">
+                                    <i class="fas fa-check"></i>
+                                </button>
+
+                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modal-edit-{{changelog.id}}">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+
+                                <a class="btn btn-danger btn-sm" href="{{ path('changelog.delete', {'id': changelog.id} )}}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                            {{ render(controller('App\\Controller\\ChangelogController::validate', { 'id' : changelog.id } )) }}
+                            {{ render(controller('App\\Controller\\ChangelogController::edit', { 'id' : changelog.id } )) }}
+                            {% endif %}
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+
+        </div>
+        <!-- /.card -->
+
+      </section>
+      <!-- /.content -->
+</div>
+
+<div class="modal fade" id="modal-schedule">
+    <div class="modal-dialog modal-default">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">{{ 'changelog.planning' | trans({}, 'patchtracking')}}</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            {{ form_start(form )}}
+            <div class="form-group">
+                <label for="">{{ 'version.new' | trans({}, 'patchtracking')}}</label>
+                {{ form_widget(form.updateVersionTo, {'attr': {'class': 'form-control'}}) }}
+
+                <label for="">{{ 'changelog.scheduled_date' | trans({}, 'patchtracking')}}</label>
+                {{ form_widget(form.updateScheduleAt,{'attr': {'class': 'form-control', 'type': 'date'}}) }}
+
+
+                <label for="changelog_updateBy">{{ 'changelog.done_by' | trans({}, 'patchtracking')}}</label>
+                {{ form_widget(form.updateBy, {'attr': {'class': 'form-control'}}) }}
+            </div>
+
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'global.cancel' | trans({}, 'patchtracking')}}</button>
+          <button type="submit" class="btn btn-primary">{{ 'global.submit' | trans({}, 'patchtracking')}}</button>
+          {{ form_end(form) }}
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+
+
+    </div>
+    <div class="modal-footer">
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset("assets/js/patchtracking.js")}}"></script>
+{% endblock %}

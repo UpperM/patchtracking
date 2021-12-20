@@ -1,0 +1,5 @@
+register.email.not_valid: The email '{{ value }}' is not a valid email.
+register.email.already_used: This email is already used.
+register.fullname.not_valid: Please enter a valid full name
+register.password.not_valid.min_length: Your password must be at least 8 characters long
+register.password.not_match: Password confirmation doesn't match Password

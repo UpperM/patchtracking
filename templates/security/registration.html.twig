@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PatchTracking - Inscription</title>
+        <link rel="stylesheet" href="{{ asset ("assets/css/adminlte.min.css")}}">
+        <link rel="stylesheet" href="{{ asset ("assets/css/patchtracking.css")}}">
+        <link rel="stylesheet" href="{{ asset ("assets/plugins/fontawesome-free/css/all.min.css")}}">
+
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+        {% block stylesheets %}{% endblock %}
+    </head>
+<body class="hold-transition register-page">
+<div class="register-box">
+  <div class="register-logo">
+    <img src="{{ asset ("assets/img/PatchTracking.png")}}" alt=""  class="img-fluid">
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <p class="login-box-msg">{{ 'login.register' | trans({}, 'patchtracking')}}</p>
+
+        {{form_start(form)}}
+      <form action="../../index.html" method="post">
+
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend3"><span class="fas fa-user"></span></span>
+              </div>
+              {{ form_widget(form.fullName, {'attr': {'class': 'form-control', 'placeholder': 'Full name'}}) }}
+              <div class="invalid-feedback">Please provide your full name.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend3"><span class="fas fa-envelope"></span></span>
+              </div>
+              {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+              <div class="invalid-feedback">Please choose a username.</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend3"><span class="fas fa-lock"></span></span>
+              </div>
+                  {{ form_widget(form.password, {'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+
+              <div class="invalid-feedback"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12 mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroupPrepend3"><span class="fas fa-lock"></span></span>
+              </div>
+              {{ form_widget(form.confirm_password, {'attr': {'class': 'form-control', 'placeholder': 'Retype Password'}}) }}
+              <div class="invalid-feedback">{{ 'register.retype_password' | trans({}, 'patchtracking')}}</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-6">
+              <button type="submit" class="btn btn-primary btn-block">{{ 'global.submit' | trans({}, 'patchtracking')}}</button>
+            </div>
+            <div class="col-6">
+              <a href="{{ path('security.login')}}" class="btn btn-secondary btn-block">{{ 'login.sign_in' | trans({}, 'patchtracking')}}</a>
+            </div>
+            <!-- /.col -->
+        </div>
+        {{form_end(form)}}
+      </form>
+
+    </div>
+    <!-- /.form-box -->
+  </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+
+        <script type="text/javascript" src="{{ asset("assets/js/jquery.min.js")}}"></script>
+        <script type="text/javascript" src="{{ asset("assets/js/adminlte.min.js")}}"></script>
+        <script type="text/javascript" src="{{ asset("assets/plugins/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
+</body>
+</html>

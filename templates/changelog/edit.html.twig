@@ -1,0 +1,51 @@
+﻿
+<div class="modal fade" id="modal-edit-{{changelog.id}}">
+
+  <div class="modal-dialog modal-default">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ 'global.edit' | trans({}, 'patchtracking')}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      {{ form_start(form, {'action': path('changelog.edit', {'id': changelog.id })}  )}}
+
+      <div class="modal-body text-left">
+
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <label for="">{{ 'version.new' | trans({}, 'patchtracking')}}</label>
+              {{ form_widget(form.updateVersionTo, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="col-md-6">
+              <label for="">{{ 'changelog.scheduled_date' | trans({}, 'patchtracking')}}</label>
+              {{ form_widget(form.updateScheduleAt,{'attr': {'class': 'form-control', 'type': 'date'}}) }}
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-md-12">
+              <label for="">{{ 'changelog.done_by' | trans({}, 'patchtracking')}}</label>
+              {{ form_widget(form.updateBy, {'attr': {'class': 'form-control'}}) }}
+            </div>
+          </div>
+
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'global.close' | trans({}, 'patchtracking')}}</button>
+        <button type="submit" class="btn btn-primary">{{ 'global.submit' | trans({}, 'patchtracking')}}</button>
+
+      </div>
+      {{form_end(form)}}
+
+    </div>
+
+
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+
+</div>

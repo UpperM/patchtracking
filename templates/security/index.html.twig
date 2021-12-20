@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>PatchTracking - Connexion</title>
+        <link rel="stylesheet" href="{{ asset ("assets/css/adminlte.min.css")}}">
+        <link rel="stylesheet" href="{{ asset ("assets/css/patchtracking.css")}}">
+        <link rel="stylesheet" href="{{ asset ("assets/plugins/fontawesome-free/css/all.min.css")}}">
+
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+        {% block stylesheets %}{% endblock %}
+    </head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo text-center">
+    <img src="{{ asset ("assets/img/PatchTracking.png")}}" alt=""  class="img-fluid">
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">{{ 'login.sign_in' | trans({}, 'patchtracking')}}</p>
+      <form action="{{ path('security.login')}}" method="post">
+
+        <div class="input-group mb-3">
+          <input type="email" class="form-control" name="_username" placeholder="Email" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" name="_password" placeholder="{{ 'user.password' | trans({}, 'patchtracking')}}" required>
+
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+
+        </div>
+        <div class="row mt-1">
+          <div class="checkbox mb-3 col-12">
+            <input type="checkbox" id="remember_me" name="_remember_me" checked/>
+            <label for="remember_me">{{ 'login.remember_me' | trans({}, 'patchtracking')}}</label>
+        </div>
+          <div class="col-md-12">
+            <p class="text-danger">
+              {% if error %}
+                {{ error.getMessage }}
+
+              {% endif %}
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <input type="hidden" name="_csrf_token"
+          value="{{ csrf_token('authenticate') }}"
+   >
+          <!-- /.col -->
+          <div class="col-6">
+            <button type="submit" class="btn btn-primary btn-block">{{ 'login.sign_in' | trans({}, 'patchtracking')}}</button>
+          </div>
+
+          <div class="col-md-6">
+            <a href="{{path("security.registration")}}" class="btn btn-secondary btn-block">{{ 'login.register' | trans({}, 'patchtracking')}}</a>
+          </div>
+          <!-- /.col -->
+        </div>
+
+      </form>
+
+      <p class="mb-0">
+      </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+        <script type="text/javascript" src="{{ asset("assets/js/jquery.min.js")}}"></script>
+        <script type="text/javascript" src="{{ asset("assets/js/adminlte.min.js")}}"></script>
+        <script type="text/javascript" src="{{ asset("assets/plugins/bootstrap/js/bootstrap.bundle.min.js")}}"></script>
+
+</body>
+</html>

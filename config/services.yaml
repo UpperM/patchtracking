@@ -1,0 +1,107 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+
+parameters:
+    locale: 'fr'
+    reports_directory: '%kernel.project_dir%/public/uploads/reports'
+    # Api Parameters to fetch current version of application
+    # WAPT
+    api:
+        wapt:
+            uri: 'http://wapt.example.com/'
+            endpoint: 'ping'
+
+        # Grafana
+        grafana:
+            uri: 'http://grafana.example.com:3000/'
+            endpoint: 'api/frontend/settings'
+            authorization:
+                type: 'auth_bearer'
+                token: 'XXXXXXXXXXXXXXXXXXXXX'
+        kapacitor:
+            uri: 'http://chronograf.example.com:9092/'
+            endpoint: 'kapacitor/v1/config'
+
+
+
+        compellent:
+            uri: 'https://storage-center.example.com:3033/'
+            endpoint: 'api/rest/StorageCenter/StorageCenter'
+            authorization:
+                type: auth_basic
+                username: api
+                password: zf1U7SN2yI4ewyzq9CEe
+
+        glpi:
+            uri: 'https://glpi.example.com/'
+            endpoint: apirest.php/getGlpiConfig
+            authorization:
+                type: auth_sessiontoken
+                user_token: XXXXXXXXXXXXXXXXXXXXXXX
+                app_token: XXXXXXXXXXXXXXXXXXXXXXXX
+                auth_endpoint: apirest.php/initSession
+        cachethq:
+            uri: 'https://cachethq.example.com/'
+            endpoint: api/v1/version
+
+    ldap:
+        base_dn: '%env(resolve:LDAP_BASE_DN)%'
+        search_dn: '%env(resolve:LDAP_SEARCH_DN)%'
+        search_password: '%env(resolve:LDAP_SEARCH_PASSWORD)%'
+        default_roles: '%env(resolve:LDAP_DEFAULT_ROLE)%'
+        uid_key: '%env(resolve:LDAP_UID_KEY)%'
+        filter: '%env(resolve:LDAP_FILTER)%'
+
+    glpi:
+        enable: false
+        uri: 'https://glpi.fontenay-aux-roses.fr/'
+        user_token: XXXXXXXXXXXXX # Need token with admin write permission
+        app_token: XXXXXXXXXXXXXXXXXXXXX
+        entities_id: 2
+        itilcategories_id: 50 # Category id for ticket creation
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\Services\Api\:
+        resource: '../src/Services/Api/'
+
+    app.glpiApi:
+        class: App\Services\Api\GLPIApi
+
+    Symfony\Component\Ldap\Ldap:
+        arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+
+    Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
+        arguments:
+            -   host: ad.fontenay-aux-roses.fr
+                port: 389
+                options:
+                    protocol_version: 3
+                    referrals: false
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+

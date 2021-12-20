@@ -1,0 +1,139 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}Paramètres{% endblock %}
+
+
+{% block content %}
+
+    <!-- Content Header (Page header) -->
+
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>Paramètres</h2>
+            </div>
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+
+        <div class="col-md-12">
+          <div class="row">
+
+          <!-- Add application  -->
+          <div class="col-md-5">
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">{{ 'settings.add_application' | trans({}, 'patchtracking')}}</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+                {{ form_start(form)}}
+                <div class="card-body">
+
+                  <!-- row application name -->
+                  <div class="row mb-2">
+
+                    <div class="col-md-12">
+                      <label for="">{{ 'global.name' | trans({}, 'patchtracking')}}</label>
+                      {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                  </div>
+
+                  <!-- row currentVersion -->
+                  <div class="row mb-2">
+
+                    <!-- currentVersion -->
+                    <div class="col-md-5">
+                      <label for="">{{ 'version.current' | trans({}, 'patchtracking')}}</label>
+                      <div class="input-group form-group">
+
+                        {{ form_widget(form.currentVersion, {'attr': {'class': 'form-control'}}) }}
+                        <!-- currentVersion button -->
+                        <div class="input-group-append">
+                          <!-- currentVersion button -->
+                          <div class="input-group-append">
+                            <button id="btnApplicationCurrentVersion" class="btn btn-outline-primary" type="button" onclick="getApplicationCurrentVersion()" disabled>
+                              <i class="fa fa-sync"></i>
+                            </button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-7"  id="apiName">
+                      <label for="">{{ 'settings.api_name' | trans({}, 'patchtracking')}}</label>
+                      <div class="input-group mb-3" class="form-group">
+                          {{ form_widget(form.api_name, {'attr': {'class': 'form-control','onchange': 'onSelectApi(this)'} }) }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- latestVersion row -->
+                  <div class="row">
+
+                    <!-- latestVersion input -->
+                    <div class="col-md-5">
+                      <label for="">{{ 'version.latest' | trans({}, 'patchtracking')}}</label>
+                      <div class="input-group mb-3 form-group">
+                          {{ form_widget(form.latestVersion, {'attr': {'class': 'form-control'} }) }}
+
+                        <!-- latestVersion button -->
+                        <div class="input-group-append">
+                          <button id="btnGithubVersion" class="btn btn-outline-primary" type="button" onclick="getGithubVersion()" disabled>
+                            <i class="fa fa-sync"></i>
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <!-- latestVersion githubRepository -->
+                    <div class="col-md-7 invisible"  id="githubForm">
+                        <label for="">{{ 'settings.github_repo' | trans({}, 'patchtracking')}}</label>
+                      <div class="input-group mb-3" class="form-group">
+                          {{ form_widget(form.githubRepository, {'attr': {'class': 'form-control','placeholder': 'https://github.com/glpi-project/glpi'} }) }}
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- checkbox get latestVersion -->
+                  <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" type="checkbox" id="enableGithub" onclick="displayGithubUrl(this)">
+                    <label for="enableGithub" class="custom-control-label"><label for="">{{ 'settings.get_from_github' | trans({}, 'patchtracking')}}</label></label>
+                  </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">{{ 'global.submit' | trans({}, 'patchtracking')}}</button>
+                </div>
+                {{form_end(form)}}
+            </div>
+            <!-- /.card -->
+          </div>
+
+
+
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset("assets/js/patchtracking.js")}}"></script>
+{% endblock %}

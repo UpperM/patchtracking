@@ -1,0 +1,84 @@
+          <!-- Main Sidebar Container -->
+          <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="/" class="brand-link mb-4">
+              <img src="/assets/img/PatchTracking-logo-text.png" alt="AdminLTE Logo" class="brand-image"
+                   >
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+
+              <!-- Sidebar Menu -->
+              <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                  <!-- Add icons to the links using the .nav-icon class
+                       with font-awesome or any other icon font library -->
+                  <li class="nav-item has-treeview">
+                    <a href="{{ path('home') }}" class="nav-link {% if app.request.attributes.get('_route') == 'home' %}active{% endif %}">
+                      <i class="nav-icon fas fa-tachometer-alt"></i>
+                      <p>
+                        Dashboard
+                      </p>
+                    </a>
+                  </li>
+
+
+                  <li class="nav-item has-treeview {% if app.request.attributes.get('_route') == 'applications' %}menu-open{% endif %}">
+                    <a href="#" class="nav-link {% if app.request.attributes.get('_route') == 'applications' %}active{% endif %}">
+                        <i class="nav-icon fas fa-th"></i>
+                      <p>
+                        Applications
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    {% for application in applications %}
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{ path('applications', {id : application.id }) }}" class="nav-link
+                          {% if (app.request.attributes.get('_route') == 'applications') and (app.request.attributes.get('_route_params')['id'] == application.id) %}active{% endif %}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>{{ application.name }} </p>
+                          </a>
+                        </li>
+                      </ul>
+                    {% endfor %}
+
+                  </li>
+
+                  <li class="nav-item has-treeview {% if app.request.attributes.get('_route') starts with 'settings' %}menu-open{% endif %}">
+                    <a href="#" class="nav-link {% if app.request.attributes.get('_route') starts with 'settings' %}active{% endif %}">
+                        <i class="nav-icon fas fa-cog"></i>
+                      <p>
+                        Paramètres
+                        <i class="fas fa-angle-left right"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{ path('settings') }}" class="nav-link
+                          {% if (app.request.attributes.get('_route') == 'settings') %}active{% endif %}">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Applications</p>
+                          </a>
+                        </li>
+                      </ul>
+                      <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                          <a href="{{ path('settings.users') }}" class="nav-link
+                          {% if (app.request.attributes.get('_route') == 'settings.users') %}active{% endif %}">
+                            <i class="fa fa-users nav-icon"></i>
+                            <p>Utilisateurs</p>
+                          </a>
+                        </li>
+                      </ul>
+                  </li>
+
+
+                </ul>
+              </nav>
+              <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+          </aside>
+

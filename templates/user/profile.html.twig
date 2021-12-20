@@ -1,0 +1,114 @@
+﻿{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'user.profil' | trans({}, 'patchtracking')}}{% endblock %}
+
+
+{% block content %}
+
+    <!-- Content Header (Page header) -->
+
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+                <h2>{{ 'user.profil' | trans({}, 'patchtracking')}}</h2>
+            </div>
+
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+
+        <div class="col-md-12">
+          <div class="row">
+
+          <!-- Add application  -->
+          <div class="col-md-5">
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">{{ 'user.profil' | trans({}, 'patchtracking')}}</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+                {{ form_start(form)}}
+                <div class="card-body">
+
+                  <!-- row full_name -->
+                  <div class="row mb-2">
+                    <div class="col-md-12">
+                      <label for="">{{ 'global.name' | trans({}, 'patchtracking')}}</label>
+                      {{ form_widget(form.fullName, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                  </div>
+
+                  <!-- row email -->
+                  <div class="row mb-2">
+                    <div class="col-md-12">
+                      <label for="">{{ 'user.email' | trans({}, 'patchtracking')}}</label>
+                      <div class="input-group form-group">
+                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- row email -->
+                  <div class="row mb-2">
+                    <div class="col-md-6">
+                      <label for="">{{ 'user.password' | trans({}, 'patchtracking')}}</label>
+                      <div class="input-group form-group">
+                        {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="">{{ 'global.confirm' | trans({}, 'patchtracking')}}</label>
+                        <div class="input-group form-group">
+                          {{ form_widget(form.confirm_password, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                      </div>
+
+                  </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  {% if app.user.ldapAuth == 1 %}
+                  <p>{{ 'user.authentification_by_ldap_cant_edit_profile' | trans({}, 'patchtracking')}}</p>
+                  {% else %}
+                  <button type="submit" class="btn btn-primary">{{ 'global.submit' | trans({}, 'patchtracking')}}</button>
+                  {% endif %}
+                </div>
+                {{form_end(form)}}
+            </div>
+            <!-- /.card -->
+          </div>
+
+
+
+          </div>
+        </div>
+      </section>
+      <!-- /.content -->
+</div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+  {{ parent() }}
+
+  <script type="text/javascript" src="{{ asset("assets/js/patchtracking.js")}}"></script>
+  {% if app.user.ldapAuth == 1 %}
+  <script>
+    $(document).ready(function() {
+      $(".form-control").prop('disabled', true);  
+    })
+  </script>
+  {% endif %}
+
+{% endblock %}

@@ -1,0 +1,52 @@
+﻿settings:
+    settings: Paramètres
+    add_application: Ajouter une application
+    manage_applications: Gestion des applications
+    api_name: Api
+    get_from_github: Récupérer la dernière version depuis GitHub
+    github_repo: Dépôt Github
+
+version:
+    current: Version installée
+    latest: Version disponible
+    new: Nouvelle version
+    oldest: Ancienne version
+    check_current: Vérifier les versions installée
+    check_latest: Vérifier les versions disponibles
+
+changelog:
+    scheduled_update: Mises à jour planifiées
+    schedule_update: Planifier une mise à jour
+    up_to_date: A jour
+    not_up_to_date: Non à jour
+    available_update: Mise à jour disponible
+    history: Historique des mises à jours
+    scheduled_date: Date planifié
+    effective_date: Date effective
+    done_by: Effectuée par
+    comment: Commentaire
+
+global:
+    name: Nom
+    submit: Valider
+    status: Statut
+    success: Succès
+    scheduled: Planifié
+    cancel: Annuler
+    confirm: Confirmation
+user:
+    user: Utilisateur
+    users: Utilisateurs
+    management: Gestion des utilisateurs
+    email: Email
+    full_name: Nom
+    password: Mot de passe
+    profil: Profil
+    authentification_method: Source
+    authentification_by_ldap_cant_edit_profile: You cannot modify your information because you are authenticated by your LDAP directory.
+
+login:
+    forgot_password: Mot de passe oublié
+    register: Inscription
+    sign_in: Se connecter
+    remember_me: Rester connecter
